@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>设置角色</title>
+    <link th:href="@{/css/message.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
+</head>
+
+<body>
+
+<div class="row">
+    <div class="col-lg-6">
+        <form th:action="@{/mainController/toRoleSet}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="username" placeholder="关键字查询"/>
+                <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">查询</button>
+      </span>
+            </div><!-- /input-group -->
+        </form>
+    </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+
+
+<table class="table table-striped ">
+    <tr class="label-success">
+        <th style="width: 10%">序号</th>
+        <th style="width: 20%">用户名称</th>
+        <th style="width: 15%">用户角色</th>
+        <th style="width: 10%">修改角色</th>
+        <th style="width: 10%">操作</th>
+    </tr>
+    <tr th:each="u,ustatus:${user}">
+        <td th:text="${ustatus.count}"></td>
+        <td th:text="${u.username}"></td>
+        <td th:id="'hh'+${ustatus.count}" th:text="${u.rolename}"></td>
+        <td>
+            <select th:id="${ustatus.count}" name="role" class="role"
+                    th:onchange="'javascript:selectRole('+${ustatus.count}+','+${u.id}+');'">
+                <option value="">---请选择---</option>
+                <a th:each="r,rstatus:${role}">
+                    <option th:value="${r.id}" th:text="${r.rolename}"></option>
+                </a>
+            </select>
+        </td>
+        <td><a th:href="@{/userController/deleteOne(id=${u.id})}">删除用户</a></td>
+    </tr>
+</table>
+
+
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" th:src="@{/js/ForumBack.js}"></script>
+</html>
